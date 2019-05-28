@@ -10,7 +10,11 @@ function debug (...args) {
 }
 
 const app = express();
-app.use(morgan('combined'));
+app.use(morgan('combined', {
+  skip (req, res) {
+    return res.statusCode === 204;
+  }
+}));
 app.disable('etag');
 app.disable('x-powered-by');
 
