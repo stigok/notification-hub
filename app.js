@@ -3,6 +3,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const api = require('./notifications.js');
 
+function debug (...args) {
+  if (process.env.DEBUG) {
+    console.debug(...args);
+  }
+}
+
 const app = express();
 app.use(morgan('combined'));
 app.disable('etag');
@@ -11,7 +17,7 @@ app.disable('x-powered-by');
 app.get('/', (req, res, next) => {
   const msg = api.next();
   if (!msg) {
-    console.debug('No new notifications');
+    debug('No new notifications');
     return res.status(204).end();
   }
   res.json(msg);
