@@ -1,3 +1,13 @@
+# notification-hub
+
+Tiny HTTP API to store JSON objects non-persistently in memory.
+
+See examples folder for more information about how I use this to
+send my laptop notifications from my IRC session in irssi, using
+`libnotify`, `curl`, and this server.
+
+## Install and run
+
 Install dependencies
 
 ```
