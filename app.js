@@ -1,4 +1,3 @@
-const morgan = require('morgan');
 const express = require('express');
 const bodyParser = require('body-parser');
 const api = require('./notifications.js');
@@ -10,13 +9,6 @@ function debug (...args) {
 }
 
 const app = express();
-app.use(morgan('combined', {
-  skip (req, res) {
-    return res.statusCode === 204;
-  }
-}));
-app.disable('etag');
-app.disable('x-powered-by');
 
 app.get('/', (req, res, next) => {
   const msg = api.next();
@@ -49,10 +41,4 @@ app.use((err, req, res, next) => {
   res.status(500).send('Server error');
 });
 
-const PORT = process.env.PORT || 3000;
-const ADDRESS = process.env.ADDRESS || '127.0.0.1';
-
-app.listen(PORT, ADDRESS, (err) => {
-  if (err) throw new Error('Error when starting server', err);
-  console.log(`Listening on ${ADDRESS}:${PORT}`);
-});
+module.exports = app;
