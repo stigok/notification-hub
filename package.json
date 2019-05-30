@@ -1,7 +1,7 @@
 {
   "name": "notification-hub",
   "version": "1.0.0",
-  "description": "",
+  "description": "HTTP API to store notifications used for libnotify",
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.19.0",
