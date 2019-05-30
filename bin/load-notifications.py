@@ -4,6 +4,7 @@ import os
 import sys
 import time
 import requests
+import subprocess
 
 HOST="10.7.0.1"
 PORT="3005"
@@ -11,7 +12,12 @@ interval=5
 
 def notify(message, title=None, priority="normal", time=5000):
     """Sends a notification using libnotify"""
-    os.system(f"notify-send -t {time} -a {__file__} '{title}' '{message}'")
+    app_name = os.path.basename(__file__)
+    subprocess.run(["notify-send",
+                    "-t", str(time),
+                    "-a", app_name,
+                    title,
+                    message])
 
 if __name__ == "__main__":
     while True:
