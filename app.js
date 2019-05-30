@@ -8,9 +8,9 @@ function debug (...args) {
   }
 }
 
-const app = express();
+const router = express.Router();
 
-app.get('/', (req, res, next) => {
+router.get('/', (req, res, next) => {
   const msg = api.next();
   if (!msg) {
     debug('No new notifications');
@@ -19,7 +19,7 @@ app.get('/', (req, res, next) => {
   res.json(msg);
 });
 
-app.post('/', bodyParser.json(), (req, res) => {
+router.post('/', bodyParser.json(), (req, res) => {
   if (!req.body || !req.body.message) {
     return res.status(400).end();
   }
@@ -32,13 +32,13 @@ app.post('/', bodyParser.json(), (req, res) => {
   res.status(201).end();
 });
 
-app.use((req, res, next) => {
+router.use((req, res, next) => {
   res.status(404).send('Not found');
 });
 
-app.use((err, req, res, next) => {
+router.use((err, req, res, next) => {
   console.error(err);
   res.status(500).send('Server error');
 });
 
-module.exports = app;
+module.exports = router;
