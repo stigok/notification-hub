@@ -40,10 +40,15 @@ Irssi::signal_add('print text' => sub {
             || Irssi::settings_get_bool('hilightcmd_currentwin'))) {
 
         $stripped =~ s/^\s+|\s+$//g;
-        system(named_sprintf(
+        # Escape doublequotes which could mess up the JSON format
+        $stripped =~ s/"|\"//g;
+        my $cmd = named_sprintf(
             Irssi::settings_get_str('hilightcmd_systemcmd'),
             message => shell_quote_best_effort $stripped
-        ));
+        );
+
+        # Run command, swallow stdout, while stderr still bubbles up nicely
+        qx`$cmd`;
     }
 });
 
