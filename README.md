@@ -32,6 +32,8 @@ Then retreive the latest notification again
 $ curl -i 127.0.0.1:3000
 ```
 
+Get some extra log output with `DEBUG=1`
+
 ## API
 
 ### `POST` /
