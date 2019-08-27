@@ -23,7 +23,6 @@ router.post('/', bodyParser.json(), (req, res) => {
   if (!req.body || !req.body.message) {
     return res.status(400).end();
   }
-  console.log('Add a new notification', req.body);
   api.add({
     title: req.body.title,
     message: req.body.message,
