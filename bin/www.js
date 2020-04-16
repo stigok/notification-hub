@@ -6,14 +6,18 @@ const app = require('../app.js');
 
 const PORT = process.env.PORT || 3000;
 const ADDRESS = process.env.ADDRESS || '127.0.0.1';
+const DEBUG = process.env.DEBUG || false;
 
 const www = express();
 www.disable('etag');
 www.disable('x-powered-by');
 www.use(morgan('combined', {
   skip (req, res) {
-    // Don't log requests resulting in 204
-    return res.statusCode === 204;
+    // Don't log requests resulting in 204 unless debugging
+    if (DEBUG)
+      return false;
+    else
+      return res.statusCode === 204;
   }
 }));
 
