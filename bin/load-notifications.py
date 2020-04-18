@@ -6,9 +6,8 @@ import time
 import requests
 import subprocess
 
-HOST="10.7.0.1"
-PORT="3005"
-interval=5
+HTTP_SERVER=os.getenv("HTTP_SERVER", "http://127.0.0.1:3000")
+POLL_INT=int(os.getenv("POLL_INT", 5))
 
 def notify(message, title=None, priority="normal", time=5000):
     """Sends a notification using libnotify"""
@@ -21,10 +20,10 @@ def notify(message, title=None, priority="normal", time=5000):
 
 if __name__ == "__main__":
     while True:
-        time.sleep(interval)
+        time.sleep(POLL_INT)
 
         # Get next unread notification
-        r = requests.get("http://%s:%s/" % (HOST, PORT))
+        r = requests.get("%s/" % (HTTP_SERVER))
         if r.status_code == 204:
             continue
         if r.status_code != 200:
